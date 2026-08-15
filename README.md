@@ -1,6 +1,9 @@
 # Amsterdam Airbnb Explorer
 
 [![App smoke test](https://github.com/HoosseinRahimi/airbnb-project/actions/workflows/app-smoke-test.yml/badge.svg)](https://github.com/HoosseinRahimi/airbnb-project/actions/workflows/app-smoke-test.yml)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://amsterdam-airbnb-explorer.streamlit.app/)
+
+**Live demo:** https://amsterdam-airbnb-explorer.streamlit.app/
 
 An interactive Streamlit dashboard for exploring Airbnb listings in Amsterdam by nightly price and distance from a selected point of interest.
 
@@ -17,6 +20,7 @@ The project turns an Airbnb listings dataset into a simple visual decision tool:
 - Distance information for each listing
 - Cached dataset loading
 - Automated Streamlit boot/health smoke test in GitHub Actions
+- Public Streamlit Community Cloud deployment
 
 ## Tech Stack
 
@@ -97,18 +101,13 @@ streamlit run streamlit_app.py
 
 Streamlit will print the local URL in the terminal, normally `http://localhost:8501`.
 
-## Deploy on Streamlit Community Cloud
+## Deployment
 
-This repository is organized for direct Streamlit Community Cloud deployment: the entrypoint, dependency file, and local CSV data are all committed in the repository root.
+The app is deployed on Streamlit Community Cloud:
 
-1. Sign in to Streamlit Community Cloud with GitHub.
-2. Choose **Create app**.
-3. Select repository `HoosseinRahimi/airbnb-project`.
-4. Select branch `main`.
-5. Set the entrypoint to `streamlit_app.py`.
-6. Choose an app subdomain and deploy.
+**https://amsterdam-airbnb-explorer.streamlit.app/**
 
-After deployment, add the public `streamlit.app` URL to the GitHub repository website field and to this README as a **Live Demo** link.
+The repository is organized for direct deployment: the Streamlit entrypoint, dependency file, and local CSV data are committed in the repository root.
 
 ## How It Works
 
