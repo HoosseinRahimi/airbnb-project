@@ -1,5 +1,7 @@
 # Amsterdam Airbnb Explorer
 
+[![App smoke test](https://github.com/HoosseinRahimi/airbnb-project/actions/workflows/app-smoke-test.yml/badge.svg)](https://github.com/HoosseinRahimi/airbnb-project/actions/workflows/app-smoke-test.yml)
+
 An interactive Streamlit dashboard for exploring Airbnb listings in Amsterdam by nightly price and distance from a selected point of interest.
 
 The project turns an Airbnb listings dataset into a simple visual decision tool: choose a maximum nightly budget, inspect matching listings, and explore their locations on an interactive map.
@@ -11,21 +13,26 @@ The project turns an Airbnb listings dataset into a simple visual decision tool:
 - Interactive nightly-budget filter
 - Summary metrics for matching listings
 - Searchable and sortable listing table
-- Interactive map of Airbnb listings and the selected point of interest
+- Interactive MapLibre-based map of Airbnb listings and the selected point of interest
 - Distance information for each listing
-- Lightweight Streamlit interface that runs locally
+- Cached dataset loading
+- Automated Streamlit boot/health smoke test in GitHub Actions
 
 ## Tech Stack
 
 - Python
 - Pandas
 - Streamlit
-- Plotly
+- Plotly / MapLibre
+- GitHub Actions
 
 ## Project Structure
 
 ```text
 airbnb-project/
+├── .github/
+│   └── workflows/
+│       └── app-smoke-test.yml
 ├── streamlit_app.py
 ├── WK1_Airbnb_Amsterdam_listings_proj_solution.csv
 ├── requirements.txt
@@ -90,22 +97,43 @@ streamlit run streamlit_app.py
 
 Streamlit will print the local URL in the terminal, normally `http://localhost:8501`.
 
+## Deploy on Streamlit Community Cloud
+
+This repository is organized for direct Streamlit Community Cloud deployment: the entrypoint, dependency file, and local CSV data are all committed in the repository root.
+
+1. Sign in to Streamlit Community Cloud with GitHub.
+2. Choose **Create app**.
+3. Select repository `HoosseinRahimi/airbnb-project`.
+4. Select branch `main`.
+5. Set the entrypoint to `streamlit_app.py`.
+6. Choose an app subdomain and deploy.
+
+After deployment, add the public `streamlit.app` URL to the GitHub repository website field and to this README as a **Live Demo** link.
+
 ## How It Works
 
-1. The CSV dataset is loaded with Pandas.
+1. The CSV dataset is loaded with Pandas using a path resolved relative to `streamlit_app.py`.
 2. The selected point of interest is separated from the Airbnb listings.
 3. The sidebar lets the user set a maximum nightly budget.
 4. Listings above the selected budget are filtered out.
 5. Streamlit displays summary statistics and the filtered table.
-6. Plotly renders the matching listings and point of interest on an interactive map.
+6. Plotly renders the matching listings and point of interest using its MapLibre-based map trace.
+
+## Continuous Verification
+
+On every push and pull request to `main`, GitHub Actions:
+
+1. installs the dependencies from `requirements.txt`,
+2. starts the Streamlit app in headless mode,
+3. polls Streamlit's health endpoint,
+4. fails the workflow if the app does not start successfully.
 
 ## Possible Improvements
 
 - Add neighbourhood and room-type filters
 - Add rating and review information
 - Fetch newer listing data from a maintained source
-- Add automated tests for the data-loading and filtering logic
-- Deploy the dashboard publicly with Streamlit Community Cloud
+- Separate data transformation from UI code and add unit tests around filtering logic
 
 ## License
 
