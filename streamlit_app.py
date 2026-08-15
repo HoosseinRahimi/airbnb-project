@@ -1,8 +1,10 @@
+from pathlib import Path
+
 import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-DATA_FILE = "WK1_Airbnb_Amsterdam_listings_proj_solution.csv"
+DATA_FILE = Path(__file__).with_name("WK1_Airbnb_Amsterdam_listings_proj_solution.csv")
 COLUMNS = [
     "Airbnb Listing ID",
     "Price",
@@ -76,7 +78,7 @@ else:
     map_data = pd.concat([filtered_listings, point_of_interest], ignore_index=True)
 
     st.subheader("Map")
-    figure = px.scatter_mapbox(
+    figure = px.scatter_map(
         map_data,
         lat="Latitude",
         lon="Longitude",
@@ -92,8 +94,9 @@ else:
             "Longitude": False,
         },
         labels={"Location": "Type", "Price": "Nightly price (£)"},
+        map_style="open-street-map",
     )
-    figure.update_layout(mapbox_style="open-street-map", margin=dict(l=0, r=0, t=0, b=0))
+    figure.update_layout(margin=dict(l=0, r=0, t=0, b=0))
     st.plotly_chart(figure, use_container_width=True)
 
 st.markdown(
